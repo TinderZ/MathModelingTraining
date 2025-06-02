@@ -1,0 +1,52 @@
+第一次floyed
+Input:
+    n: number of nodes
+    m: number of edges
+    edges: list of edges, each edge contains (x, y, z) representing the edge weight from x to y
+
+Initialization:
+    d[N][N]: distance matrix, initialized to infinity (inf), diagonal elements are 0
+    c[N][N]: cost matrix, initialized to infinity (inf), diagonal elements are 0
+
+Process:
+    For each edge (x, y, z):
+        Update d[x][y] and d[y][x] to min(d[x][y], z)
+        Update d[y][x] and d[x][y] to min(d[y][x], z)
+
+    floyd():
+        For each intermediate node k:
+            For each starting node i:
+                For each ending node j:
+                    Update d[i][j] to min(d[i][j], d[i][k] + d[k][j])
+                    Update c[i][j] to min(c[i][j], cost(d[i][k] + d[k][j]))
+
+Output:
+    For each s[i] and rail[j]:
+        Output s[i], rail[j], c[s[i]][rail[j]]
+
+
+
+
+第二次floyed
+Input:
+    n: number of nodes
+    m: number of edges
+    edges: list of edges, each edge contains (x, y, z) representing the edge weight from x to y
+
+Initialization:
+    d[N][N]: distance matrix, initialized to infinity (inf), diagonal elements are 0
+
+Process:
+    For each edge (x, y, z):
+        Update d[x][y] and d[y][x] to min(d[x][y], z)
+        Update d[y][x] and d[x][y] to min(d[y][x], z)
+
+    floyd():
+        For each intermediate node k:
+            For each starting node i:
+                For each ending node j:
+                    Update d[i][j] to min(d[i][j], d[i][k] + d[k][j])
+
+Output:
+    For each s[i] and j (from 1 to 15):
+        Output s[i], j, d[s[i]][j]

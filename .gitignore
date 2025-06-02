@@ -1,0 +1,129 @@
+# 数据文件
+data/
+
+*.xml
+*.parquet
+*.h5
+*.hdf5
+*.mat
+
+# 模型文件
+
+*.pkl
+*.pickle
+*.joblib
+*.model
+*.h5
+*.pb
+*.pth
+*.pt
+*.ckpt
+
+# 缓存文件
+cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# 环境文件
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+temp/
+tmp/
+
+# 图片输出文件（如果不需要版本控制）
+
+
+# LaTeX 相关文件
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# R 相关文件
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+
+# MATLAB 相关文件
+*.asv
+*.mex*
+
+# 大文件和媒体文件
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# 结果输出文件夹
+结果/
+输出/
+output/
+results/
+预测结果/ 

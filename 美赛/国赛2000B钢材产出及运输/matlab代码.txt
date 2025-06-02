@@ -1,0 +1,102 @@
+% 创建优化变量
+flagi12 = optimvar("flagi",1,7,"Type","integer","LowerBound",0,"UpperBound",...
+    1);
+Xij12 = optimvar("Xij",7,15,"Type","integer","LowerBound",0,"UpperBound",...
+    2000);
+Rj12 = optimvar("Rj",1,15,"Type","integer","LowerBound",0,"UpperBound",1000);
+Lj12 = optimvar("Lj",1,15,"Type","integer","LowerBound",0,"UpperBound",1000);
+
+% 设置求解器的初始起点
+initialPoint11.flagi = zeros(size(flagi12));
+initialPoint11.Xij = zeros(size(Xij12));
+initialPoint11.Rj = zeros(size(Rj12));
+initialPoint11.Lj = zeros(size(Lj12));
+
+% 创建问题
+problem = optimproblem;
+
+% 定义问题目标
+problem.Objective = fcn2optimexpr(@objectiveFcn,Xij12,Rj12,Lj12);
+
+% 定义问题约束
+problem.Constraints.constraint1 = constraintFcn3(Xij12,Rj12,Lj12);
+problem.Constraints.constraint2 = constraintFcn2(flagi12,Xij12);
+problem.Constraints.constraint3 = constraintFcn(flagi12,Xij12);
+
+% 设置非默认求解器选项
+options5 = optimoptions("surrogateopt","UseParallel",true,"PlotFcn",...
+    ["surrogateoptplot","optimplotfvalconstr","optimplotfval",...
+    "optimplotconstrviolation","optimplotx"]);
+
+% 求解问题
+[solution,objectiveValue,reasonSolverStopped] = solve(problem,initialPoint11,...
+    "Solver","surrogateopt","Options",options5);
+
+% 显示结果
+solution
+reasonSolverStopped
+objectiveValue
+
+% 清除变量
+clearvars flagi12 Xij12 Rj12 Lj12 initialPoint11 options5 reasonSolverStopped...
+    objectiveValue
+
+
+
+%目标函数如下
+function objective = objectiveFcn(Xij,Rj,Lj)
+% 此函数应返回一个表示优化目标的标量。
+% 编辑以下行以添加您的计算方法。
+data = load("E:\数模\训练题\钢材产出及运输\data.txt");
+c = data(1:7, 1:15);
+Price_i = data(1:7, 16);
+Xi = sum(Xij, 2);
+
+C_order = sum(Xi.*Price_i);
+C_freight = sum(sum(c.*Xij));
+C_paving = (sum(Rj.*Rj) + sum(Lj.*Lj)) * 0.05;
+
+objective = C_freight + C_order + C_paving;
+end
+
+
+%约束如下
+%1
+function constraints = constraintFcn3(Xij,Rj,Lj)
+% 约束是由一个比较运算符(==)分隔的两个表达式。
+len = [104, 301, 750, 606, 194, 205, 201, 680, 480, 300, 220, 210, 420, 500];
+con5 = [];
+for i = 1:14
+    con5 = [con5, Rj(i) + Lj(i+1)];
+end
+
+for j = 1:15
+    constraints(j) = sum(Xij(:, j)) == Rj(j) + Lj(j);
+end
+constraints(16) = Rj(1) == 0;
+constraints(17) = Lj(15) == 0;
+for k = 1:14
+    constraints(k + 17) = con5(k) == len(k);
+end
+
+end
+
+%2
+function constraints = constraintFcn2(flagi,Xij)
+% 约束是由一个比较运算符(<=)分隔的两个表达式。
+data = load("E:\数模\训练题\钢材产出及运输\data.txt");
+si = data(1:7, 17);
+
+for i = 1:7
+    constraints(i) = sum(Xij(i, :)) <= flagi(i) * si(i);
+end
+
+end
+
+%3
+function constraints = constraintFcn(flagi,Xij)
+for i = 1:7
+    constraints(i) = sum(Xij(i, :)) >= flagi(i) * 500;
+end
+
+end
