@@ -68,7 +68,8 @@ venv.bak/
 *.swo
 *~
 
-美赛\2025D 美赛实战题\2025赛题\2025_Problem_D_Data
+
+/美赛/2025D 美赛实战题/2025赛题/2025_Problem_D_Data/*
 
 # 系统文件
 .DS_Store
